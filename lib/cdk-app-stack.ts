@@ -15,7 +15,7 @@ import { Construct } from 'constructs';
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-
+    // just testing
     // domain
     const domainName = 'jared-gordon.link';
     const siteDomain = 'www.' + domainName;

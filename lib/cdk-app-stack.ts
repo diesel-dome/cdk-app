@@ -36,7 +36,7 @@ export class CdkAppStack extends cdk.Stack {
     // Create S3 bucket for website
     const siteBucket = new s3.Bucket(this, 'WebSiteBucket', {
       bucketName: siteDomain,
-      publicReadAccess: false,
+      publicReadAccess: true,
       blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -88,7 +88,8 @@ export class CdkAppStack extends cdk.Stack {
     new s3deploy.BucketDeployment(this, 'DeployWebsite', {
       sources: [s3deploy.Source.asset('./website')],
       destinationBucket: siteBucket,
-      cacheControl: [s3deploy.CacheControl.noCache()]
+      distribution: distribution,
+      distributionPaths: ['/*'],
     });
 
   }

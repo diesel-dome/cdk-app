@@ -88,6 +88,7 @@ export class CdkAppStack extends cdk.Stack {
     new s3deploy.BucketDeployment(this, 'DeployWebsite', {
       sources: [s3deploy.Source.asset('./website')],
       destinationBucket: siteBucket,
+      cacheControl: [s3deploy.CacheControl.noCache()]
     });
 
   }

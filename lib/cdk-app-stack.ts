@@ -15,7 +15,6 @@ import { Construct } from 'constructs';
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    // just testing
     // domain
     const domainName = 'jared-gordon.link';
     const siteDomain = 'www.' + domainName;
@@ -37,7 +36,7 @@ export class CdkAppStack extends cdk.Stack {
     // Create S3 bucket for website
     const siteBucket = new s3.Bucket(this, 'WebSiteBucket', {
       bucketName: siteDomain,
-      publicReadAccess: true,
+      publicReadAccess: false,
       blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,

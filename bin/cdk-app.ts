@@ -2,6 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { CdkAppStack } from '../lib/cdk-app-stack';
+import { AutomationStack } from '../lib/automation-stack';
 
 const app = new cdk.App();
 new CdkAppStack(app, 'CdkAppStack', {
@@ -19,3 +20,7 @@ new CdkAppStack(app, 'CdkAppStack', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+new AutomationStack(app, 'AutomationStack', {
+  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+})

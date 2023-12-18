@@ -12,13 +12,17 @@ export class AutomationStack extends cdk.Stack {
         //S3 Bucket
         const automationBucket = new s3.Bucket(this, 'automation-bucket');
 
-        //Lambda function to trigger with s3 put object
-        const automationLambda = new lambda.Function(this, 'automation-lambda', {
+        //Lambda function to trigger with s3 put object using Python 3.11 runtime
+        const nameConventionLambda = new lambda.Function(this, 'name-convention-lambda', {
             runtime: lambda.Runtime.PYTHON_3_11,
-            code: lambda.Code.fromAsset('lambda'),
-            handler: 'index.handler',
+            code: lambda.Code.fromAsset('lambda/name-convention'),
+            handler: 'app.main',
         }
         );
+
+        //Add S3 trigger to Lambda function with specific s3 key
+        automationBucket.addEventNotification(s3.EventType.OBJECT_CREATED, new s3Events.LambdaDestination(nameConventionLambda),
+            { prefix: 'name-convetion/landing/' });
 
     }
 }

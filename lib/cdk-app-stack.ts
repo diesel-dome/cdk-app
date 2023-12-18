@@ -71,14 +71,14 @@ export class CdkAppStack extends cdk.Stack {
     new CfnOutput(this, 'DistributionId', {value: distribution.distributionId});
 
     // Create a Route 53 alias record for the Cloudfront distribution
-    new route53.ARecord(this, 'WWWSiteAliasRecord', {
+    const routeWwwAliasRecord = new route53.ARecord(this, 'WWWSiteAliasRecord', {
       recordName: siteDomain,
       target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
       zone
     });
 
     // Add an 'A' record to Route 53 
-    new route53.ARecord(this, 'SiteAliasRecord', {
+    const routeSiteAliasRecord = new route53.ARecord(this, 'SiteAliasRecord', {
       zone,
       recordName: domainName,
       target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution))
